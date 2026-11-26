@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anatomic Aesthetics · Injectables for men in Norwich</title>
+  <!-- Remove this robots line when the site is ready to launch -->
+  <meta name="robots" content="noindex">
+  <meta name="description" content="Anti-wrinkle treatment and dermal fillers for men aged 18 and over at a private clinic in Norwich, from one experienced, registered clinician. Free consultation.">
+  <meta property="og:title" content="Anatomic Aesthetics · Norwich">
+  <meta property="og:description" content="Injectables for men, by an experienced clinician. That's all we do.">
+  <meta property="og:type" content="website">
+  <!-- PLACEHOLDER: make og:image an absolute URL once the domain is known -->
+  <meta property="og:image" content="assets/hero.jpg">
+
+  <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
+  <meta name="theme-color" content="#f6f2ed">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Public+Sans:wght@400;500;600&display=swap">
+
+  <!-- Motion: pass 2 (scroll style G · Scrollytelling) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* Brand tokens (pass 3). Light site, OKLCH only. Source: assets/brand/tokens.css
+       Scene: a man in his forties, between meetings, sitting in a quiet consulting room
+       with warm plaster walls and soft north light falling on a walnut desk. */
+    :root {
+      color-scheme: light;
+      --bg:          oklch(0.962 0.007 70);  /* warm plaster wall, north light */
+      --surface:     oklch(0.925 0.011 68);  /* linen stone bands */
+      --ink:         oklch(0.24 0.018 55);   /* deep brown text, 14.8:1 on bg */
+      --muted:       oklch(0.47 0.016 60);   /* secondary text, 6.1:1 on bg */
+      --accent:      oklch(0.37 0.075 52);   /* deep walnut, the only saturated colour */
+      --accent-text: oklch(0.965 0.008 72);  /* on accent, 9.7:1 */
+      --border:      oklch(0.85 0.013 68);   /* decorative hairlines only */
+      --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+      --font-body:    "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --radius-s: 2px; --radius-m: 6px; --radius-l: 10px;
+      --max-width: 1120px;
+      --header-h: 64px;
+      --ease: cubic-bezier(.2,.8,.2,1);
+
+      /* Type scale (review batch 3) */
+      --fs-xs: .875rem;                          /* eyebrow, labels, captions, legal */
+      --fs-s: .9375rem;                          /* nav, buttons, small print */
+      --fs-m: 1.0625rem;                         /* body */
+      --fs-l: 1.1875rem;                         /* lede, feature body */
+      --fs-xl: clamp(1.375rem, 2.4vw, 1.875rem); /* h3 */
+      --fs-2xl: clamp(1.875rem, 3.6vw, 2.875rem);/* h2, CTA line */
+      --fs-3xl: clamp(2.125rem, 4.6vw, 3.5rem);  /* thesis */
+      --fs-hero: clamp(2.6rem, 6.5vw, 5rem);     /* h1 */
+      --fs-display: clamp(2.5rem, 11vw, 9rem);   /* footer name, step number */
+
+      /* Spacing scale (8px base) */
+      --sp-1: 4px; --sp-2: 8px; --sp-3: 16px; --sp-4: 24px; --sp-5: 32px; --sp-6: 48px; --sp-7: 64px; --sp-8: 96px; --sp-9: 144px;
+      --section-s: clamp(64px, 9vw, 96px);
+      --section-l: clamp(96px, 12vw, 144px);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html.lenis { scroll-behavior: auto; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: var(--fs-m)/1.6 var(--font-body); }
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.1; letter-spacing: -.01em; margin: 0 0 .5em; }
+    p { margin: 0 0 1em; }
+    a { color: inherit; }
+    section { scroll-margin-top: var(--header-h); }
+    .wrap { width: min(100% - 32px, var(--max-width)); margin-inline: auto; }
+    .skip { position: absolute; left: -999px; }
+    .skip:focus { left: var(--sp-3); top: var(--sp-3); z-index: 100; background: var(--bg); padding: var(--sp-2) var(--sp-3); }
+
+
+    /* Header */
+    .site-header {
+      position: fixed; inset: 0 0 auto; height: var(--header-h); z-index: 50;
+      display: flex; align-items: center; transition: background .3s var(--ease), border-color .3s var(--ease);
+      border-bottom: 1px solid transparent;
+    }
+    .site-header.is-scrolled { background: var(--bg); border-color: var(--border); }
+    .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .wordmark { display: block; line-height: 0; color: var(--accent-text); transition: color .3s var(--ease); }
+    .site-header.is-scrolled .wordmark { color: var(--ink); }
+    .wordmark__full { display: inline-flex; align-items: center; gap: 14px; line-height: 1; white-space: nowrap; }
+    .wm__name { font: 400 1.375rem/1 var(--font-display); letter-spacing: .14em; text-transform: uppercase; }
+    .wm__rule { width: 1px; height: 22px; background: currentColor; opacity: .5; }
+    .wm__sub { font: 500 .625rem/1 var(--font-body); letter-spacing: .32em; text-transform: uppercase; }
+    .wordmark__mono { display: none; }
+    .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .nav { display: none; gap: var(--sp-4); font-size: var(--fs-s); }
+    .nav a { text-decoration: none; color: var(--accent-text); transition: color .3s var(--ease); }
+    .site-header.is-scrolled .nav a { color: var(--ink); }
+    .btn {
+      display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--sp-4);
+      background: var(--accent); color: var(--accent-text); text-decoration: none; font-size: var(--fs-s);
+      border-radius: var(--radius-s); white-space: nowrap; font-family: var(--font-body); font-weight: 500; transition: transform .2s var(--ease), background .2s var(--ease);
+    }
+    @media (max-width: 599px) { .site-header .btn { padding: 0 var(--sp-3); font-size: var(--fs-xs); } .wordmark__full { display: none; } .wordmark__mono { display: block; } }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .hero :focus-visible, .cta :focus-visible, .site-header:not(.is-scrolled) :focus-visible { outline-color: var(--accent-text); }
+    @media (min-width: 900px) { .nav { display: flex; } }
+
+    /* Media wrappers */
+    .media { overflow: hidden; background: var(--surface); }
+    .media--w { aspect-ratio: 16 / 9; }
+    .media--v { aspect-ratio: 4 / 5; }
+    .media img { color: transparent; font-size: 0; filter: sepia(.15) saturate(.9); }
+    .media--brand { display: grid; place-items: center; background: var(--accent); }
+    .media--brand img { width: 38%; height: auto; filter: none; }
+    .feature__media .media { max-width: 440px; }
+    .media video, .media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* Stock clips are cool grey; warm them toward the plaster-and-walnut scene */
+    .hero__video, .band__video { filter: sepia(.28) saturate(.85) brightness(.98); }
+    .hero__video { filter: sepia(.3) saturate(.8) brightness(.62); }
+    .band__video { transform: scale(1.8); transform-origin: 82% 62%; }
+
+    /* Hero */
+    .hero { position: relative; min-height: 100svh; display: grid; align-items: end; overflow: hidden; }
+    .hero__media { position: absolute; inset: 0; }
+    .hero__text { position: relative; padding-block: 18vh 12vh; max-width: 40rem; }
+    @media (min-width: 1200px) { .hero__text { max-width: 54rem; } .hero .lede { max-width: 36rem; } }
+    .hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hero__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, color-mix(in oklch, var(--ink) 45%, transparent), transparent 60%); }
+    .hero__text { color: var(--accent-text); }
+    .hero__text::before { /* soft dark halo so the text never washes out */
+      content: ""; position: absolute; inset: -15% -25%; z-index: -1;
+      background: radial-gradient(closest-side, color-mix(in oklch, var(--ink) 78%, transparent) 40%, transparent);
+      filter: blur(24px);
+    }
+    .eyebrow { font-size: var(--fs-xs); letter-spacing: .08em; color: var(--muted); }
+    .hero .eyebrow { color: var(--accent-text); text-shadow: 0 1px 12px color-mix(in oklch, var(--ink) 70%, transparent); }
+    .hero .lede { text-shadow: 0 1px 16px color-mix(in oklch, var(--ink) 55%, transparent); }
+    .hero .btn { background: var(--accent-text); color: var(--ink); }
+    .hero h1 { font-size: var(--fs-hero); }
+    .lede { font-size: var(--fs-l); max-width: 36rem; }
+
+    /* Thesis */
+    .thesis { padding-block: var(--section-l); }
+    .thesis p { font: 400 var(--fs-3xl)/1.15 var(--font-display); max-width: 22ch; margin: 0; }
+
+    /* Why: Sam's story */
+    .why { padding-block: var(--section-s); background: var(--surface); }
+    .why__grid { display: grid; gap: var(--sp-5); }
+    .why h2 { font-size: var(--fs-2xl); }
+    .why__pull { font: italic 400 var(--fs-3xl)/1.15 var(--font-display); color: var(--accent); max-width: 16ch; margin: 0; }
+    .why__story { font-size: var(--fs-l); line-height: 1.65; max-width: 36rem; min-width: 0; }
+    .why__story p { margin-bottom: var(--sp-4); }
+    .why__sign { font-size: var(--fs-s); color: var(--muted); margin: var(--sp-5) 0 0 !important; padding-top: var(--sp-3); border-top: 1px solid var(--border); }
+    @media (min-width: 900px) { .why__grid { grid-template-columns: 5fr 6fr; gap: var(--sp-7); align-items: start; } .why__lead { position: sticky; top: calc(var(--header-h) + var(--sp-6)); } }
+
+    /* Feature pairs */
+    .feature { padding-block: var(--section-s); }
+    .feature .wrap { display: grid; gap: var(--sp-5); align-items: center; }
+    @media (min-width: 800px) {
+      .feature .wrap { grid-template-columns: 5fr 6fr; gap: var(--sp-7); }
+      .feature--flip .feature__media { order: 2; }
+    }
+    .feature h2 { font-size: var(--fs-2xl); max-width: 14ch; }
+    .feature p { font-size: var(--fs-l); max-width: 30ch; color: var(--muted); }
+
+    /* Gallery band: image, middle video, image */
+    .band { padding-block: var(--section-s); }
+    .band__track { display: grid; grid-auto-flow: column; grid-auto-columns: 72%; gap: var(--sp-3); overflow-x: auto; scroll-snap-type: x mandatory; padding-inline: var(--sp-3); }
+    .band__track:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .band__track > figure { margin: 0; scroll-snap-align: center; min-width: 0; }
+    .band figcaption { margin-top: var(--sp-2); font-size: var(--fs-s); color: var(--muted); }
+    @media (min-width: 800px) {
+      .band__track { grid-auto-flow: initial; grid-template-columns: 1fr 1.6fr 1fr; overflow: visible; align-items: center; width: min(100% - 32px, var(--max-width)); margin-inline: auto; padding: 0; }
+    }
+
+    /* Scrollytelling: sticky step indicator + steps (G) */
+    .story { padding-block: var(--section-s); }
+    .story__title { font-size: var(--fs-2xl); margin-bottom: var(--sp-5); }
+    .story__grid { display: grid; gap: var(--sp-4); }
+    .story__stage {
+      position: sticky; top: var(--header-h); z-index: 2; background: var(--bg);
+      padding-block: 12px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: baseline; gap: 16px;
+    }
+    .story__num { color: var(--accent); font: 400 min(var(--fs-display), 7rem)/1 var(--font-display); font-variant-numeric: tabular-nums; }
+    .story__label { font: 400 var(--fs-l)/1.2 var(--font-display); color: var(--muted); }
+    .story__steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+    /* Phones and tablets: a compact numbered list, no sticky stage */
+    .story__stage { display: none; }
+    .story__step { padding-block: var(--sp-4); border-top: 1px solid var(--border); }
+    .story__step:last-child { border-bottom: 1px solid var(--border); }
+    .story__step p { margin: 0; max-width: 40ch; }
+    .story__step h3 { font-size: var(--fs-xl); }
+    .story__step .n { font: 500 var(--fs-xs)/1 var(--font-body); font-variant-numeric: tabular-nums; letter-spacing: .08em; color: var(--accent); display: block; margin-bottom: var(--sp-3); }
+    @media (min-width: 900px) {
+      .story__grid { grid-template-columns: 5fr 6fr; gap: var(--sp-7); align-items: start; }
+      .story__stage { display: flex; top: calc(var(--header-h) + 15vh); flex-direction: column; gap: var(--sp-2); border: 0; padding: 0; height: max-content; }
+      .story__step { padding-block: var(--sp-6); border: 0; }
+      .story__step:last-child { border: 0; }
+      .js-motion .story__step { opacity: .35; transition: opacity .4s var(--ease); }
+      .js-motion .story__step.is-active { opacity: 1; }
+    }
+    .no-motion .story__step { opacity: 1; }
+
+    /* Local essentials */
+    .essentials { padding-block: var(--section-s); border-top: 1px solid var(--border); }
+    .essentials h2 { font-size: var(--fs-2xl); }
+    .rules { display: grid; gap: var(--sp-4); max-width: 38rem; }
+    .rules dt { font-weight: 700; }
+    .rules dd { margin: var(--sp-1) 0 0; color: var(--muted); }
+    .questions__title { font-size: var(--fs-xl); margin: var(--sp-7) 0 var(--sp-2); }
+    .questions { list-style: none; counter-reset: q; padding: 0; margin: 0; max-width: 60rem; }
+    .questions li { counter-increment: q; display: grid; grid-template-columns: 2.5rem 1fr; gap: var(--sp-1) var(--sp-3); padding-block: var(--sp-3); border-bottom: 1px solid var(--border); }
+    .questions li::before { content: counter(q, decimal-leading-zero); grid-row: span 2; color: var(--accent); font: 500 var(--fs-xs)/1.9 var(--font-body); letter-spacing: .08em; }
+    .questions .q { font-weight: 600; }
+    .questions .a { color: var(--muted); }
+    @media (min-width: 800px) {
+      .questions li { grid-template-columns: 2.5rem 1.2fr 1fr; }
+      .questions li::before { grid-row: auto; }
+    }
+    .price-list { list-style: none; padding: 0; margin: 0; max-width: 40rem; }
+    .fees { display: grid; gap: var(--sp-6); align-items: start; }
+    .fees__note { color: var(--muted); max-width: 24rem; }
+    .fees__note p { margin-bottom: var(--sp-4); }
+    @media (min-width: 900px) { .fees { grid-template-columns: minmax(0, 40rem) 1fr; gap: var(--sp-8); } .fees__note { position: sticky; top: calc(var(--header-h) + var(--sp-6)); padding-top: var(--sp-3); } }
+    .price-list li { display: flex; gap: var(--sp-3); padding-block: var(--sp-3); border-bottom: 1px solid var(--border); }
+    .price-list li span:first-child { flex: 1; }
+    .faq details { border-bottom: 1px solid var(--border); padding-block: var(--sp-3); max-width: 46rem; }
+    .faq summary { cursor: pointer; font-weight: 600; min-height: 44px; display: flex; align-items: center; }
+
+    .thesis em { font-style: italic; color: var(--accent); }
+
+    /* CTA: the one walnut band on the page */
+    .cta { padding-block: var(--section-l); text-align: left; background: var(--accent); color: var(--accent-text); }
+    .cta .contact, .cta .contact a { color: color-mix(in oklch, var(--accent-text) 82%, transparent); }
+    .cta .btn { background: var(--accent-text); color: var(--ink); }
+    .cta__next { margin-top: var(--sp-4); font-size: var(--fs-s); color: color-mix(in oklch, var(--accent-text) 82%, transparent); max-width: 34rem; }
+    .cta .line { font: 400 var(--fs-2xl)/1.15 var(--font-display); max-width: 20ch; }
+
+    /* Footer */
+    .site-footer { padding-block: var(--sp-7) var(--sp-6); overflow: hidden; }
+    .footer__name { font: 400 var(--fs-display)/.9 var(--font-display); letter-spacing: -.02em; margin: 0 0 var(--sp-6); white-space: nowrap; }
+    .footer__name span { display: inline-block; }
+    .footer__meta { display: grid; gap: var(--sp-4); color: var(--muted); font-size: var(--fs-s); }
+    .footer__meta p { margin: 0; }
+    .footer__label { font-size: var(--fs-xs); letter-spacing: .08em; color: var(--ink); margin-bottom: var(--sp-2) !important; }
+    .footer__meta a { color: var(--muted); }
+    .footer__meta a:hover { color: var(--ink); }
+    @media (min-width: 800px) { .footer__meta { grid-template-columns: repeat(2, minmax(0, 18rem)); gap: var(--sp-7); } }
+    .footer__legal { display: flex; flex-wrap: wrap; gap: var(--sp-1) var(--sp-4); margin-top: var(--sp-5); padding-top: var(--sp-3); border-top: 1px solid var(--border); font-size: var(--fs-xs); }
+    .footer__legal a { color: var(--muted); min-height: 44px; display: inline-flex; align-items: center; }
+    .footer__legal a:hover { color: var(--ink); }
+    .footer__copy { margin-left: auto; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
+
+    .small { font-size: var(--fs-xs); color: var(--muted); }
+    .contact a { color: var(--accent); }
+    figcaption em, .rules dt em { font-style: italic; color: var(--accent); font-family: var(--font-display); font-size: 1.1em; }
+
+    /* Sticky mobile CTA */
+    .mobile-cta { position: fixed; inset: auto 0 0; z-index: 40; padding: var(--sp-2) var(--sp-3) calc(var(--sp-2) + env(safe-area-inset-bottom)); background: var(--bg); border-top: 1px solid var(--border); transform: translateY(100%); transition: transform .3s var(--ease); }
+    .mobile-cta.is-visible { transform: none; }
+    .mobile-cta .btn { width: 100%; justify-content: center; }
+    @media (max-width: 799px) { .site-footer { padding-bottom: 104px; } }
+    @media (min-width: 800px) { .mobile-cta { display: none; } }
+    @media (max-width: 799px) {
+      .site-header .btn { transition: opacity .3s var(--ease), visibility .3s; }
+      .mcta-on .site-header .btn { opacity: 0; visibility: hidden; }
+    }
+
+    /* Reveal: hidden only when JS motion is running */
+    /* Reveals animate from a visible state; nothing waits hidden for a scroll */
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalBusiness",
+    "name": "Anatomic Aesthetics",
+    "description": "Private anti-wrinkle treatment and dermal fillers for men aged 18 and over, from one experienced, registered clinician.",
+    "address": { "@type": "PostalAddress", "addressLocality": "Norwich", "addressCountry": "GB" },
+    "areaServed": "Norwich"
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top">
+    <div class="wrap">
+      <a class="wordmark" href="#top">
+        <span class="visually-hidden">Anatomic Aesthetics</span>
+        <span class="wordmark__full" aria-hidden="true"><span class="wm__name">Anatomic</span><span class="wm__rule"></span><span class="wm__sub">Aesthetics</span></span>
+        <img class="wordmark__mono" src="assets/brand/anatomy-monogram.svg" alt="" width="40" height="40">
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="#why">Our story</a>
+        <a href="#process">How it works</a>
+        <a href="#rules">Who can treat you</a>
+        <a href="#prices">Fees</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <!-- PLACEHOLDER: booking URL (platform TBC); all [data-book] links point here -->
+      <a class="btn" href="#book" data-book>Book a consultation</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- 2 · HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__media" aria-hidden="true">
+        <!-- STOCK (atmosphere only): Pexels video 4106940, Pexels licence (leaf shadows on wood). Replace with a real or rendered clip when ready. -->
+        <video class="hero__video" autoplay muted loop playsinline preload="auto" poster="assets/hero.jpg" width="1920" height="1080">
+          <source src="assets/hero.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="wrap">
+        <div class="hero__text">
+          <p class="eyebrow">Men's clinic · Norwich · By appointment</p>
+          <h1 id="hero-title">Aesthetic medicine, practised properly.</h1>
+          <p class="lede">Private anti-wrinkle and filler treatments for men. Assessed, planned and treated by the same experienced clinician.</p>
+          <a class="btn" href="#book" data-book>Book a free consultation</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · THESIS -->
+    <section class="thesis" aria-label="Our approach">
+      <div class="wrap">
+        <p class="reveal">Injectables for men, by an experienced clinician. <em>That's all we do.</em></p>
+      </div>
+    </section>
+
+    <!-- WHY: Sam's story (attribution confirmed by the user as Sam's own partner) -->
+    <section class="why" id="why" aria-labelledby="why-title">
+      <div class="wrap why__grid">
+        <div class="why__lead">
+          <h2 id="why-title" class="reveal">Why I started Anatomic</h2>
+          <p class="why__pull reveal">Booking takes nerve. Walking in shouldn't.</p>
+        </div>
+        <div class="why__story">
+          <p>My partner's first anti-wrinkle treatment should have been simple. She had a consultation, was sent home, and waited three days for someone else to prescribe it. Then she went back, paid a second fee, and had it done in a salon between the nails and the tans. Nobody explained why.</p>
+          <p>On her next visit, a man was sitting in the waiting room. He looked like he wanted to leave. In a room built for someone else, with nobody to tell him what would happen or whether it was safe, every minute must have made him doubt a decision he'd taken a long time to reach.</p>
+          <p>That's why plenty of men who want this never book. Walking past a high-street window into an open room, to ask a stranger about your face, feels exposed. Asking who is actually qualified feels awkward. So they leave it.</p>
+          <!-- PLACEHOLDER: Sam to confirm the Norwich claim is true before launch -->
+          <p>[I couldn't find anywhere in Norwich built for men,] so I built one: a private room in a medical building, and one clinician who assesses, prescribes and treats you, with everything explained before anything happens.</p>
+          <p class="why__sign">Sam · Founder, registered clinician and independent prescriber</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · FEATURE PAIR 1 -->
+    <section class="feature" aria-labelledby="f1-title">
+      <div class="wrap">
+        <div class="feature__media reveal">
+          <!-- STOCK (atmosphere only, not the clinic's room): Pexels photo 12172057, Pexels licence -->
+          <!-- PLACEHOLDER (review F06): replace with a professional portrait of Sam saved as assets/g1.jpg (4:5, portrait). Update the alt text to: "Sam, registered clinician and independent prescriber". -->
+          <div class="media media--v"><img src="assets/g1.jpg" alt="An empty chair in a quiet room, window light falling across a plaster wall and wooden floor" width="933" height="1400"></div>
+        </div>
+        <div class="feature__text">
+          <!-- PLACEHOLDER: confirm name, NHS band and role title, registration body and number -->
+          <h2 id="f1-title">One clinician, start to finish.</h2>
+          <!-- PLACEHOLDER: confirm years in the NHS and that his NHS role involves injections -->
+          <p>A registered clinician and prescriber with [X] years in the NHS, where injecting is part of his daily work. Anatomic is his private clinic.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · FEATURE PAIR 2 -->
+    <section class="feature feature--flip" aria-labelledby="f2-title">
+      <div class="wrap">
+        <div class="feature__media reveal">
+          <!-- STOCK (atmosphere only, not a client): Pexels photo 31585379, Pexels licence -->
+          <div class="media media--v"><img src="assets/g2.jpg" alt="Close-up of a man's face in profile, side light across his cheek and stubbled jaw" width="933" height="1400"></div>
+        </div>
+        <div class="feature__text">
+          <h2 id="f2-title">Built around men, not adapted for them.</h2>
+          <p>No menu, no upsell. Sometimes the honest answer is less, or nothing.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · GALLERY BAND -->
+    <section class="band" aria-label="The clinic">
+      <div class="band__track" tabindex="0" role="group" aria-label="Clinic gallery, scrolls sideways on small screens">
+        <figure class="reveal">
+          <!-- STOCK (atmosphere only, not a client): Pexels photo 9902417, Pexels licence -->
+          <div class="media media--v"><img src="assets/g3.jpg" alt="A man in side profile by a window, eyes lowered" width="933" height="1400"></div>
+          <figcaption>Thirty minutes, <em>face to face</em></figcaption>
+        </figure>
+        <figure class="reveal">
+          <!-- STOCK (atmosphere only): Pexels video 2996079, Pexels licence. Cropped by CSS to the light and shadow on the wall. -->
+          <div class="media media--w"><video class="band__video" muted loop playsinline preload="metadata" poster="assets/middle.jpg" width="960" height="540" aria-hidden="true">
+            <source src="assets/middle.mp4" type="video/mp4">
+          </video></div>
+          <figcaption>Measured in <em>millimetres</em></figcaption>
+        </figure>
+        <figure class="reveal">
+          <!-- Brand tile (not one of the five media slots). Swap for a real clinic photo when available. -->
+          <div class="media media--v media--brand"><img src="assets/brand/anatomy-monogram-walnut.svg" alt="" width="64" height="64"></div>
+          <figcaption>A <em>private</em> consulting room</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 7 · NUMBERED ROWS as scrollytelling (G) -->
+    <section class="story" id="process" aria-labelledby="process-title">
+      <div class="wrap">
+        <h2 id="process-title" class="story__title reveal">How it works</h2>
+      </div>
+      <div class="wrap story__grid">
+        <div class="story__stage" aria-hidden="true">
+          <span class="story__num" data-story-num>01</span>
+          <span class="story__label" data-story-label>Consultation</span>
+        </div>
+        <div>
+          <ol class="story__steps">
+            <li class="story__step is-active" data-step="01" data-label="Consultation">
+              <span class="n">01</span>
+              <h3>Consultation</h3>
+              <p>Thirty minutes. Free. Your history, your goals, and a frank view of what is realistic.</p>
+            </li>
+            <li class="story__step" data-step="02" data-label="Plan">
+              <span class="n">02</span>
+              <h3>Plan</h3>
+              <p>Areas, risks and the exact fee, in writing. Decide in your own time.</p>
+            </li>
+            <li class="story__step" data-step="03" data-label="Treatment">
+              <span class="n">03</span>
+              <h3>Treatment</h3>
+              <p>Around [20 to 30] minutes. Fillers show immediately; anti-wrinkle results build over two weeks.</p>
+            </li>
+            <li class="story__step" data-step="04" data-label="Review">
+              <span class="n">04</span>
+              <h3>Review</h3>
+              <p>Two weeks on, Sam checks the result and fine-tunes. <!-- PLACEHOLDER: confirm review is included in the fee -->[Included.]</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 · LOCAL ESSENTIALS -->
+    <section class="essentials" id="rules" aria-labelledby="rules-title">
+      <div class="wrap">
+        <h2 id="rules-title" class="reveal">Who is allowed to treat you</h2>
+        <!-- Facts checked against GOV.UK, legislation.gov.uk and the House of Commons Library (Nov 2026). Re-check licensing status before launch. -->
+        <dl class="rules">
+          <div><dt>A prescription needs a prescriber.</dt><dd>Some anti-wrinkle treatments use prescription-only medicines. A qualified prescriber should assess you in person first.</dd></div>
+          <div><dt>Fillers need no qualification at all.</dt><dd>In England, anyone can legally inject them today. A licensing scheme is planned but not yet in force.</dd></div>
+          <div><dt>Under 18s cannot be treated.</dt><dd>A criminal offence in England since 2021, even with a parent's consent.</dd></div>
+        </dl>
+
+        <h3 class="questions__title reveal">Five questions to ask any clinic</h3>
+        <!-- PLACEHOLDER: registration number and insurer -->
+        <ol class="questions">
+          <li><span class="q">What is your professional registration, and where can I check it?</span><span class="a">[HCPC, PH000000], on the HCPC public register.</span></li>
+          <li><span class="q">Who prescribes, and will I meet them?</span><span class="a">Sam, at every appointment.</span></li>
+          <li><span class="q">What insurance do you hold?</span><span class="a">Medical malpractice cover with [insurer].</span></li>
+          <li><span class="q">Will I see the risks and the price in writing first?</span><span class="a">Yes. Your written plan covers both before any treatment.</span></li>
+          <li><span class="q">What aftercare do I get?</span><span class="a">A review two weeks on, and Sam's direct contact details for any question or concern.</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="essentials" id="prices" aria-labelledby="prices-title">
+      <div class="wrap">
+        <h2 id="prices-title" class="reveal">Fees</h2>
+        <!-- PLACEHOLDER: all prices. ASA note: a price beside an anti-wrinkle treatment may be read as advertising a prescription-only medicine; check with the ASA Copy Advice service before launch. -->
+        <div class="fees"><ul class="price-list">
+          <li><span>Consultation, 30 minutes</span><span>Free</span></li>
+          <li><span>Anti-wrinkle treatment, one area</span><span>£[ ]</span></li>
+          <li><span>Anti-wrinkle treatment, two areas</span><span>£[ ]</span></li>
+          <li><span>Anti-wrinkle treatment, three areas</span><span>£[ ]</span></li>
+          <li><span>Jawline filler</span><span>from £[ ]</span></li>
+          <li><span>Chin filler</span><span>£[ ]</span></li>
+          <li><span>Cheek filler</span><span>£[ ]</span></li>
+          <li><span>Lip filler</span><span>£[ ]</span></li>
+          <li><span>Two-week review</span><span>[Included]</span></li>
+        </ul>
+        <div class="fees__note">
+          <p>Every fee is confirmed in writing before treatment begins. The consultation is free, whether or not you go ahead.</p>
+          <a class="btn" href="#book" data-book>Book a free consultation</a>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="essentials faq" id="faq" aria-labelledby="faq-title">
+      <div class="wrap">
+        <h2 id="faq-title" class="reveal">Asked often</h2>
+        <details><summary>Will people be able to tell?</summary><p>They should notice you look rested, not treated. If something would look obvious on you, Sam will say so.</p></details>
+        <details><summary>Does it hurt?</summary><p>A brief sting. Many fillers contain a local anaesthetic.</p></details>
+        <details><summary>How long do results last?</summary><p>Anti-wrinkle treatment: three to four months. Fillers: six to eighteen months, depending on area and product.</p></details>
+        <!-- PLACEHOLDER: confirm Sam only uses hyaluronic acid (dissolvable) fillers. The dissolving enzyme is itself prescription-only, so it is deliberately not named (ASA). -->
+        <details><summary>Can it be reversed?</summary><p>Most dermal fillers are hyaluronic acid, which can be dissolved with an enzyme injection, sometimes over more than one session. Anti-wrinkle treatment cannot be dissolved; it wears off gradually over around three to four months. [Sam uses dissolvable hyaluronic acid fillers only.]</p></details>
+        <details><summary>Is this an NHS service?</summary><p>No. Anatomic is a private clinic and all treatment is paid for privately. Sam brings his NHS clinical experience to it, but the clinic is not part of the NHS.</p></details>
+        <details><summary>Do I have to book treatment at the consultation?</summary><p>No. You leave with a written plan, not a commitment.</p></details>
+        <!-- PLACEHOLDER: check against the final privacy policy -->
+        <details><summary>Is it confidential?</summary><p>Yes. Your records are held securely under UK GDPR and shared with no one, including your GP, without your consent.</p></details>
+        <details><summary>Where are you?</summary><p>A private consulting room in a Norwich medical building. The address comes with your booking.</p></details>
+      </div>
+    </section>
+
+    <!-- 9 · CTA -->
+    <section class="cta" id="book" aria-labelledby="book-title">
+      <div class="wrap">
+        <h2 id="book-title" class="line reveal">Book the consultation. Decide afterwards.</h2>
+        <!-- PLACEHOLDER: email address and Instagram handle -->
+        <p class="contact">Free, 30 minutes, no obligation · Norwich, address sent on booking<br>
+          <a href="mailto:hello@example.com">[hello@domain]</a> · <a href="https://www.instagram.com/" rel="noopener" target="_blank">[@instagram]</a></p>
+        <a class="btn" href="#book" data-book>Book a free consultation</a>
+        <p class="cta__next">After you book, you'll get a confirmation with the address and what to bring.</p>
+      </div>
+    </section>
+  </main>
+
+  <aside class="mobile-cta" aria-label="Book a consultation">
+    <a class="btn" href="#book" data-book>Book a free consultation</a>
+  </aside>
+
+  <!-- 10 · ANIMATED FOOTER -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <p class="footer__name"><span class="visually-hidden">Anatomic Aesthetics</span><span aria-hidden="true" data-split>Anatomic</span></p>
+      <div class="footer__meta">
+        <div>
+          <p class="footer__label">Visit</p>
+          <!-- PLACEHOLDER: days and hours -->
+          <p>Norwich<br>Full address sent when you book<br>[Days and hours]</p>
+        </div>
+        <div>
+          <p class="footer__label">Contact</p>
+          <!-- PLACEHOLDER: email address and Instagram handle -->
+          <p><a href="mailto:hello@example.com">[hello@domain]</a><br><a href="https://www.instagram.com/" rel="noopener" target="_blank">[@instagram]</a></p>
+        </div>
+      </div>
+      <nav class="footer__legal" aria-label="Legal">
+        <a href="privacy.html">Privacy</a>
+        <a href="cookies.html">Cookies</a>
+        <a href="terms.html">Booking terms</a>
+        <a href="complaints.html">Complaints</a>
+        <a href="accessibility.html">Accessibility</a>
+        <span class="footer__copy">© <span data-year>2026</span> · <a href="#top">Back to top</a></span>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelector('[data-year]').textContent = new Date().getFullYear();
+
+    // Header background once scrolled
+    const header = document.querySelector('.site-header');
+    const mcta = document.querySelector('.mobile-cta');
+    const bookSection = document.querySelector('#book');
+    const onScroll = () => {
+      header.classList.toggle('is-scrolled', window.scrollY > 40);
+      const r = bookSection.getBoundingClientRect();
+      const bookInView = r.top < innerHeight && r.bottom > 0;
+      const showBar = window.scrollY > innerHeight * .8 && !bookInView;
+      mcta.classList.toggle('is-visible', showBar);
+      document.body.classList.toggle('mcta-on', showBar);
+    };
+    addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const motionOK = matchMedia('(prefers-reduced-motion: no-preference)').matches;
+      const heroVideo = document.querySelector('.hero__video');
+      const bandVideo = document.querySelector('.band__video');
+      if (!motionOK) { heroVideo?.pause(); heroVideo?.removeAttribute('autoplay'); }
+      const canScroll = document.documentElement.scrollHeight > innerHeight * 1.5;
+      if (!(window.gsap && window.Lenis && window.ScrollTrigger) || !motionOK || !canScroll) {
+        document.documentElement.classList.add('no-motion');
+        if (motionOK && bandVideo) bandVideo.play().catch(() => {});
+        return;
+      }
+      document.documentElement.classList.add('js-motion');
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Lenis smooth inertia, driven by GSAP's ticker
+      const lenis = new Lenis();
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(t => lenis.raf(t * 1000));
+      gsap.ticker.lagSmoothing(0);
+
+      // In-page links with header offset
+      document.addEventListener('click', e => {
+        const a = e.target.closest('a[href^="#"]');
+        if (!a) return;
+        const target = a.getAttribute('href') === '#top' ? 0 : document.querySelector(a.getAttribute('href'));
+        if (target === null) return;
+        e.preventDefault();
+        lenis.scrollTo(target, { offset: -parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) });
+      });
+
+      // Reveals
+      gsap.utils.toArray('.reveal').forEach(el => {
+        gsap.from(el, { y: 24, duration: .9, ease: 'power2.out', immediateRender: false,
+          scrollTrigger: { trigger: el, start: 'top 85%', once: true } });
+      });
+
+      // Middle video plays only while the gallery band is on screen
+      if (bandVideo) ScrollTrigger.create({ trigger: bandVideo, start: 'top bottom', end: 'bottom top',
+        onToggle: self => self.isActive ? bandVideo.play().catch(() => {}) : bandVideo.pause() });
+
+      // Scrollytelling: each step lights up and updates the sticky stage
+      const num = document.querySelector('[data-story-num]');
+      const label = document.querySelector('[data-story-label]');
+      const steps = gsap.utils.toArray('.story__step');
+      steps.forEach(step => {
+        ScrollTrigger.create({
+          trigger: step, start: 'top 55%', end: 'bottom 55%',
+          onToggle: self => {
+            if (!self.isActive) return;
+            steps.forEach(s => s.classList.toggle('is-active', s === step));
+            num.textContent = step.dataset.step;
+            label.textContent = step.dataset.label;
+            gsap.fromTo([num, label], { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' });
+          }
+        });
+      });
+
+      // Animated footer: letters rise in
+      const name = document.querySelector('[data-split]');
+      name.innerHTML = [...name.textContent].map(c => `<span aria-hidden="true">${c}</span>`).join('');
+      gsap.from(name.children, { yPercent: 60, stagger: .05, duration: .8, ease: 'power3.out', immediateRender: false,
+        scrollTrigger: { trigger: name, start: 'top 90%', once: true } });
+    });
+  </script>
+</body>
+</html>
